@@ -20,7 +20,8 @@
       }
     ],
     "paths": {
-      "@demo/shared": ["tools/demo/index.ts"]
+      "@demo/shared": ["tools/demo/index.ts"],
+      "@nativescript/ruff-amap": ["packages/ruff-amap/index.d.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

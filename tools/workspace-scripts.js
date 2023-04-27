@@ -61,6 +61,13 @@ module.exports = {
     // packages
     // build output is always in dist/packages
     '@nativescript': {
+      // @nativescript/ruff-amap
+      'ruff-amap': {
+        build: {
+          script: 'nx run ruff-amap:build.all',
+          description: '@nativescript/ruff-amap: Build',
+        },
+      },
       'build-all': {
         script: 'nx run-many --target=build.all --all',
         description: 'Build all packages',
@@ -71,6 +78,10 @@ module.exports = {
       description: '_____________  Focus (VS Code supported)  _____________',
     },
     focus: {
+      'ruff-amap': {
+        script: 'nx run ruff-amap:focus',
+        description: 'Focus on @nativescript/ruff-amap',
+      },
       reset: {
         script: 'nx g @nativescript/plugin-tools:focus-packages',
         description: 'Reset Focus',

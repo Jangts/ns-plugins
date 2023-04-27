@@ -24,7 +24,7 @@ npm run setup
 npm start
 ```
 
-- @nativescript
+- [@nativescript/ruff-amap](packages/ruff-amap/README.md)
 
 # How to use?
 
