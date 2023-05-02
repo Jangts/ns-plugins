@@ -1,14 +1,10 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page">
-    <Page.actionBar>
-        <ActionBar title="ruff-amap" icon="" class="action-bar">
-        </ActionBar>
-    </Page.actionBar>
-    <StackLayout class="p-20">
-        <ScrollView class="h-full">
-          <StackLayout>
-            <Button text="Test ruff-amap" tap="{{ testIt }}" class="btn btn-primary"/>
-
-          </StackLayout>
-        </ScrollView>
-    </StackLayout>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:ruff="@nativescript/ruff-amap"
+  navigatingTo="navigatingTo" class="page">
+  <Page.actionBar>
+    <ActionBar title="Ruff Amap" icon="" class="action-bar">
+    </ActionBar>
+  </Page.actionBar>
+  <StackLayout>
+    <ruff:RuffAmapView class="h-full" />
+  </StackLayout>
 </Page>
