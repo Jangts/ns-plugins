@@ -25,29 +25,6 @@ import { RuffAmapCommon } from './common';
 export class RuffAmapView extends ContentView {
   private nativeMapView: MAMapView;
 
-  constructor() {
-    super();
-    NSUserDefaults.standardUserDefaults.setBoolForKey(true, 'agreeStatus');
-    NSUserDefaults.standardUserDefaults.synchronize();
-
-    // @ts-ignore
-    AMapServices.sharedServices().enableHTTPS = true;
-
-    // @ts-ignore
-    AMapServices.sharedServices().apiKey = '690198b0b544d276bc49d2c5ef8d3f3f';
-
-    // @ts-ignore
-    // console.log(AMapServices.sharedServices().apiKey, Object.keys(MAMapView), MAMapView.test, MAMapView.updatePrivacyAgree);
-    try {
-      // @ts-ignore
-      MAMapView.updatePrivacyAgree(AMapPrivacyAgreeStatus.DidAgree);
-      // @ts-ignore
-      MAMapView.updatePrivacyShowPrivacyInfo(AMapPrivacyShowStatus.DidShow, AMapPrivacyInfoStatus.DidContain);
-    } catch (error) {
-      console.log('error', error);
-    }
-  }
-
   public initNativeView(): void {
     super.initNativeView();
     this.nativeView.owner = this;
@@ -55,7 +32,20 @@ export class RuffAmapView extends ContentView {
 
   public onLoaded() {
     super.onLoaded();
-    this.initMapView();
+    // @ts-ignore
+    AMapServices.sharedServices().enableHTTPS = true;
+    // @ts-ignore
+    AMapServices.sharedServices().apiKey = '690198b0b544d276bc49d2c5ef8d3f3f';
+    if (!NSUserDefaults.standardUserDefaults.boolForKey('agreeStatus')) {
+      // 添加隐私合规弹窗
+      this.addAlertController();
+      // 更新App是否显示隐私弹窗的状态，隐私弹窗是否包含高德SDK隐私协议内容的状态. since 8.1.0
+      // @ts-ignore
+      MAMapView.updatePrivacyShowPrivacyInfo(AMapPrivacyShowStatus.DidShow, AMapPrivacyInfoStatus.DidContain);
+      this.initMapView();
+    } else {
+      this.initMapView();
+    }
   }
 
   public createNativeView(): UIView {
@@ -64,48 +54,33 @@ export class RuffAmapView extends ContentView {
     return nativeView;
   }
 
+  initLabel() {
+    const label = UILabel.alloc().initWithFrame(this.nativeView.bounds);
+    label.text = 'Hello, world';
+    label.backgroundColor = new Color('Blue').ios;
+    label.textColor = new Color('#ffff00').ios;
+    this.nativeView.addSubview(label);
+  }
+
+  initWebView() {
+    const configuration = WKWebViewConfiguration.new();
+    configuration.dataDetectorTypes = WKDataDetectorTypes.All;
+    configuration.preferences.setValueForKey(true, 'allowFileAccessFromFileURLs');
+    configuration.setValueForKey(true, 'allowUniversalAccessFromFileURLs');
+    const nsURL = NSURL.URLWithString('http://www.baidu.com');
+    const nsRequestWithUrl = NSURLRequest.requestWithURL(nsURL);
+    const webview = new WKWebView({
+      frame: this.nativeView.bounds,
+      configuration,
+    });
+    // const webview = UIWebView.alloc().initWithFrame(CGRectMake(0, 0, 200, 200));
+    webview.backgroundColor = new Color('Blue').ios;
+    webview.loadRequest(nsRequestWithUrl);
+    this.nativeView.addSubview(webview);
+  }
+
   initMapView() {
-    // console.log('bounds:', nativeView.bounds);
-    // const configuration = WKWebViewConfiguration.new();
-    // configuration.dataDetectorTypes = WKDataDetectorTypes.All;
-    // configuration.preferences.setValueForKey(true, 'allowFileAccessFromFileURLs');
-    // configuration.setValueForKey(true, 'allowUniversalAccessFromFileURLs');
-
-    // const nsURL = NSURL.URLWithString('http://www.baidu.com');
-    // const nsRequestWithUrl = NSURLRequest.requestWithURL(nsURL);
-    // const webview = new WKWebView({
-    //   frame: nativeView.bounds,
-    //   configuration,
-    // });
-
-    // // const webview = UIWebView.alloc().initWithFrame(CGRectMake(0, 0, 200, 200));
-    // webview.backgroundColor = new Color('Blue').ios;
-    // webview.loadRequest(nsRequestWithUrl);
-
-    // const coder = NSCoder.alloc();
-    // const label = UILabel.alloc().initWithFrame(nativeView.bounds);
-    // label.text = 'Hello, world';
-    // label.backgroundColor = new Color('Blue').ios;
-    // label.textColor = new Color('#ffff00').ios;
-    // console.log('label', label, label.textColor);
-    // @ts-ignore
-    // QMapServices.sharedServices().setPrivacyAgreement(true);
-    // @ts-ignore
-    // QMapServices.sharedServices().APIKey = '690198b0b544d276bc49d2c5ef8d3f3f';
-
-    // @ts-ignore
-    // console.log(AMapFoundation);
-
-    // NSUserDefaults.standardUserDefaults.setBoolForKey(false, 'agreeStatus');
-    // console.log(NSUserDefaults.standardUserDefaults.boolForKey('agreeStatus'));
-
-    // if (!NSUserDefaults.standardUserDefaults.boolForKey('agreeStatus')) {
-    //   //添加隐私合规弹窗
-    this.addAlertController();
-    //   //更新App是否显示隐私弹窗的状态，隐私弹窗是否包含高德SDK隐私协议内容的状态. since 8.1.0
-    //   // MAMapView.updatePrivacyShowPrivacyInfo(AMapPrivacyShowStatus.didShow, privacyInfo: AMapPrivacyInfoStatus.didContain)
-    // }
-
+    console.log('bounds:', this.nativeView.bounds);
     this.nativeMapView = MAMapView.alloc().initWithFrame(CGRectMake(0, 0, this.nativeView.frame.size.width, this.nativeView.frame.size.height));
     this.nativeMapView.delegate = this;
     this.nativeMapView.backgroundColor = new Color('#ffffcc').ios;
