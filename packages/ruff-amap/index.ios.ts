@@ -83,6 +83,8 @@ export class RuffAmapView extends ContentView {
     this.nativeMapView.delegate = this;
     this.nativeMapView.backgroundColor = new Color('#ffffcc').ios;
     this.nativeView.addSubview(this.nativeMapView);
+
+    console.log(Object.keys(this.nativeMapView));
   }
 
   public onLayout(left: number, top: number, right: number, bottom: number): void {

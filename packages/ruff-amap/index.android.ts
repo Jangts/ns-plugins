@@ -4,6 +4,8 @@ import { RuffAmapCommon } from './common';
 
 export class RuffAmapView extends ContentView {
   public nativeView: android.widget.FrameLayout;
+  private nativeMapView: com.amap.api.maps.MapView;
+  private nativeMap: com.amap.api.maps.AMap;
 
   constructor() {
     super();
@@ -27,30 +29,34 @@ export class RuffAmapView extends ContentView {
 
   public onLoaded() {
     super.onLoaded();
+    // @ts-ignore
+    com.amap.api.maps.MapsInitializer.updatePrivacyShow(this._context, true, true);
+    // @ts-ignore
+    com.amap.api.maps.MapsInitializer.updatePrivacyAgree(this._context, true);
     this.initMapView();
+
+    // @ts-ignore
+    const map = this.nativeMapView.getMap();
+    map.setMapType(com.amap.api.maps.AMap.MAP_TYPE_SATELLITE);
+
+    // @ts-ignore
+    console.log('map', map, map.addMarker, map.addPolyline, this.nativeMapView.setLogoPosition, map.addTileOverlay, map.moveCamera, map.setMapStatusLimits);
   }
 
   // 4. (optional) cleanup anything
   // disposeNativeView() {}
 
   initMapView() {
-    // @ts-ignore
-    com.amap.api.maps.MapsInitializer.updatePrivacyShow(this._context, true, true);
-    // @ts-ignore
-    com.amap.api.maps.MapsInitializer.updatePrivacyAgree(this._context, true);
-    const nativeMapView = new com.amap.api.maps.MapView(this._context);
-    // @ts-ignore
-    nativeMapView.onCreate(null);
-    // nativeMapView.onCreate(new android.os.Bundle());
+    const centerBJPoint = new com.amap.api.maps.model.LatLng(39.904989, 117.405285);
+    const mapOptions = new com.amap.api.maps.AMapOptions();
+    mapOptions.camera(new com.amap.api.maps.model.CameraPosition(centerBJPoint, 10, 0, 0));
+    this.nativeMapView = new com.amap.api.maps.MapView(this._context, mapOptions);
 
     // @ts-ignore
-    const map = nativeMapView.getMap();
+    this.nativeMapView.onCreate(null);
+    // this.nativeMapView.onCreate(new android.os.Bundle());
 
-    // @ts-ignore
-    console.log('map 1', Object.keys(this._context), this._context.isNativeScriptActivity, nativeMapView.isShown());
-    console.log('map 2', this._context._callbacks._rootView, map.addMarker, map);
-
-    this.nativeView.addView(nativeMapView);
+    this.nativeView.addView(this.nativeMapView);
   }
 
   initLabel() {
