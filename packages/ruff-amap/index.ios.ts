@@ -72,7 +72,6 @@ export class RuffAmapView extends ContentView {
       frame: this.nativeView.bounds,
       configuration,
     });
-    // const webview = UIWebView.alloc().initWithFrame(CGRectMake(0, 0, 200, 200));
     webview.backgroundColor = new Color('Blue').ios;
     webview.loadRequest(nsRequestWithUrl);
     this.nativeView.addSubview(webview);
