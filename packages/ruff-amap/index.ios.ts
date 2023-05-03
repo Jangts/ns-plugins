@@ -42,7 +42,6 @@ export class RuffAmapView extends ContentView {
       // 更新App是否显示隐私弹窗的状态，隐私弹窗是否包含高德SDK隐私协议内容的状态. since 8.1.0
       // @ts-ignore
       MAMapView.updatePrivacyShowPrivacyInfo(AMapPrivacyShowStatus.DidShow, AMapPrivacyInfoStatus.DidContain);
-      this.initMapView();
     } else {
       this.initMapView();
     }
@@ -80,7 +79,7 @@ export class RuffAmapView extends ContentView {
   }
 
   initMapView() {
-    console.log('bounds:', this.nativeView.bounds);
+    // console.log('bounds:', this.nativeView.bounds);
     this.nativeMapView = MAMapView.alloc().initWithFrame(CGRectMake(0, 0, this.nativeView.frame.size.width, this.nativeView.frame.size.height));
     this.nativeMapView.delegate = this;
     this.nativeMapView.backgroundColor = new Color('#ffffcc').ios;
@@ -114,6 +113,7 @@ export class RuffAmapView extends ContentView {
       //更新用户授权高德SDK隐私协议状态. since 8.1.0
       // @ts-ignore
       MAMapView.updatePrivacyAgree(AMapPrivacyAgreeStatus.DidAgree);
+      this.initMapView();
     });
     const cancel: UIAlertAction = UIAlertAction.actionWithTitleStyleHandler('不同意', UIAlertActionStyle.Default, () => {
       // @ts-ignore

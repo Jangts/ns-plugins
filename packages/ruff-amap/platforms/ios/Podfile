@@ -4,7 +4,7 @@ inhibit_all_warnings!
 
 platform :ios, "8.0" 		# 手机系统版本
 
-pod 'Tencent-MapSDK'		# 默认添加地图SDK所有子模块
+# pod 'Tencent-MapSDK'		# 默认添加地图SDK所有子模块
 
 pod 'AMap3DMap'
 pod 'AMapSearch'
