@@ -59,26 +59,26 @@ export class RuffAmapView extends ContentView {
     this.nativeView.addView(this.nativeMapView);
   }
 
-  initLabel() {
-    const label = new android.widget.TextView(this._context);
-    label.setText('Hello, world');
-    label.setBackgroundColor(new Color('Blue').android);
-    label.setTextColor(new Color('#ffff00').android);
-    this.nativeView.addView(label);
-  }
+  // initLabel() {
+  //   const label = new android.widget.TextView(this._context);
+  //   label.setText('Hello, world');
+  //   label.setBackgroundColor(new Color('Blue').android);
+  //   label.setTextColor(new Color('#ffff00').android);
+  //   this.nativeView.addView(label);
+  // }
 
-  initWebView() {
-    const url = 'https://www.baidu.com';
-    const webview = new android.webkit.WebView(this._context);
-    const settings = webview.getSettings();
+  // initWebView() {
+  //   const url = 'https://www.baidu.com';
+  //   const webview = new android.webkit.WebView(this._context);
+  //   const settings = webview.getSettings();
 
-    // Needed for the bridge library
-    settings.setJavaScriptEnabled(true);
-    settings.setAllowFileAccess(true); // Needed for Android 11
+  //   // Needed for the bridge library
+  //   settings.setJavaScriptEnabled(true);
+  //   settings.setAllowFileAccess(true); // Needed for Android 11
 
-    webview.loadUrl(url);
-    this.nativeView.addView(webview);
-  }
+  //   webview.loadUrl(url);
+  //   this.nativeView.addView(webview);
+  // }
 }
 
 export class RuffAmap extends RuffAmapCommon {}

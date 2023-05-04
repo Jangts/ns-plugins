@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type MAMapDelegate = NSObjectProtocol;
 
 interface MAMap extends NSObject {
@@ -20,4 +21,5 @@ declare class MAMapView extends UIView {
   static alloc(): MAMapView;
   delegate: ContentView;
   initWithFrame(frame: CGRect): this;
+  setMapType: any;
 }

@@ -53,30 +53,6 @@ export class RuffAmapView extends ContentView {
     return nativeView;
   }
 
-  initLabel() {
-    const label = UILabel.alloc().initWithFrame(this.nativeView.bounds);
-    label.text = 'Hello, world';
-    label.backgroundColor = new Color('Blue').ios;
-    label.textColor = new Color('#ffff00').ios;
-    this.nativeView.addSubview(label);
-  }
-
-  initWebView() {
-    const configuration = WKWebViewConfiguration.new();
-    configuration.dataDetectorTypes = WKDataDetectorTypes.All;
-    configuration.preferences.setValueForKey(true, 'allowFileAccessFromFileURLs');
-    configuration.setValueForKey(true, 'allowUniversalAccessFromFileURLs');
-    const nsURL = NSURL.URLWithString('http://www.baidu.com');
-    const nsRequestWithUrl = NSURLRequest.requestWithURL(nsURL);
-    const webview = new WKWebView({
-      frame: this.nativeView.bounds,
-      configuration,
-    });
-    webview.backgroundColor = new Color('Blue').ios;
-    webview.loadRequest(nsRequestWithUrl);
-    this.nativeView.addSubview(webview);
-  }
-
   initMapView() {
     // console.log('bounds:', this.nativeView.bounds);
     this.nativeMapView = MAMapView.alloc().initWithFrame(CGRectMake(0, 0, this.nativeView.frame.size.width, this.nativeView.frame.size.height));
@@ -84,7 +60,17 @@ export class RuffAmapView extends ContentView {
     this.nativeMapView.backgroundColor = new Color('#ffffcc').ios;
     this.nativeView.addSubview(this.nativeMapView);
 
-    console.log(Object.keys(this.nativeMapView));
+    // @ts-ignore
+    console.log('nativeMapView', Object.keys(this.nativeMapView), this.nativeMapView.userTrackingMode, MAUserTrackingModeFollow, MAMapTypeSatellite);
+
+    // @ts-ignore
+    this.nativeMapView.showsUserLocation = true;
+    // @ts-ignore
+    this.nativeMapView.userTrackingMode = MAUserTrackingModeFollow;
+
+    // @ts-ignore
+    this.nativeMapView.mapType = MAMapTypeSatellite;
+    // this.nativeMapView.setMapType(MAMapTypeSatellite); // 无效
   }
 
   public onLayout(left: number, top: number, right: number, bottom: number): void {
@@ -130,6 +116,30 @@ export class RuffAmapView extends ContentView {
 
     viewController.presentViewControllerAnimatedCompletion(alert, true, null);
   }
+
+  // initLabel() {
+  //   const label = UILabel.alloc().initWithFrame(this.nativeView.bounds);
+  //   label.text = 'Hello, world';
+  //   label.backgroundColor = new Color('Blue').ios;
+  //   label.textColor = new Color('#ffff00').ios;
+  //   this.nativeView.addSubview(label);
+  // }
+
+  // initWebView() {
+  //   const configuration = WKWebViewConfiguration.new();
+  //   configuration.dataDetectorTypes = WKDataDetectorTypes.All;
+  //   configuration.preferences.setValueForKey(true, 'allowFileAccessFromFileURLs');
+  //   configuration.setValueForKey(true, 'allowUniversalAccessFromFileURLs');
+  //   const nsURL = NSURL.URLWithString('http://www.baidu.com');
+  //   const nsRequestWithUrl = NSURLRequest.requestWithURL(nsURL);
+  //   const webview = new WKWebView({
+  //     frame: this.nativeView.bounds,
+  //     configuration,
+  //   });
+  //   webview.backgroundColor = new Color('Blue').ios;
+  //   webview.loadRequest(nsRequestWithUrl);
+  //   this.nativeView.addSubview(webview);
+  // }
 }
 
 export class RuffAmap extends RuffAmapCommon {
