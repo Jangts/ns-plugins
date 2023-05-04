@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Color, ContentView, Frame } from '@nativescript/core';
-import { RuffAmapCommon } from './common';
+import { Color, Frame } from '@nativescript/core';
+import { RuffAmapCommon, RuffAmapViewBase } from './common';
 
 // @NativeClass()
 // class MAMapViewTest extends MAMapView {
@@ -22,7 +22,21 @@ import { RuffAmapCommon } from './common';
 //   }
 // }
 
-export class RuffAmapView extends ContentView {
+// @NativeClass()
+// class MapViewDelegateImpl extends NSObject {
+//   private mapLoadedCallback: (mapView: any) => void;
+
+//   static new() {
+//     return super.new() as MapViewDelegateImpl;
+//   }
+
+//   public initWithCallback(mapLoadedCallback: (mapView: any) => void): MapViewDelegateImpl {
+//     this.mapLoadedCallback = mapLoadedCallback;
+//     return this;
+//   }
+// }
+
+export class RuffAmapView extends RuffAmapViewBase {
   private nativeMapView: MAMapView;
 
   public initNativeView(): void {
@@ -30,8 +44,17 @@ export class RuffAmapView extends ContentView {
     this.nativeView.owner = this;
   }
 
+  /**
+   * programmatically include settings
+   */
+  setConfig(settings: any) {
+    console.log('settings', settings);
+  }
+
   public onLoaded() {
     super.onLoaded();
+
+    console.log('this.config', this.config);
     // @ts-ignore
     AMapServices.sharedServices().enableHTTPS = true;
     // @ts-ignore
@@ -61,7 +84,7 @@ export class RuffAmapView extends ContentView {
     this.nativeView.addSubview(this.nativeMapView);
 
     // @ts-ignore
-    console.log('nativeMapView', Object.keys(this.nativeMapView), this.nativeMapView.userTrackingMode, MAUserTrackingModeFollow, MAMapTypeSatellite);
+    // console.log('nativeMapView', Object.keys(this.nativeMapView), this.nativeMapView.userTrackingMode, MAUserTrackingModeFollow, MAMapTypeSatellite);
 
     // @ts-ignore
     this.nativeMapView.showsUserLocation = true;
@@ -71,6 +94,18 @@ export class RuffAmapView extends ContentView {
     // @ts-ignore
     this.nativeMapView.mapType = MAMapTypeSatellite;
     // this.nativeMapView.setMapType(MAMapTypeSatellite); // 无效
+
+    console.log('222222222', this.hasListeners('mapReady'));
+
+    this.notify({
+      eventName: 'mapReady',
+      object: this,
+      // eventData: {
+      //   map: this,
+      // },
+    });
+
+    console.log('333333333');
   }
 
   public onLayout(left: number, top: number, right: number, bottom: number): void {

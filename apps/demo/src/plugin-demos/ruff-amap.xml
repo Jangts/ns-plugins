@@ -5,6 +5,7 @@
     </ActionBar>
   </Page.actionBar>
   <StackLayout>
-    <ruff:RuffAmapView class="h-full" />
+    <!-- <Button text="ruff-amap" tap="{{ onMapReady }}" class="btn btn-primary view-demo" /> -->
+    <ruff:RuffAmapView class="h-full" mapWidth="300" mapApiKey="1111111" mapReady="{{onMapReady}}" />
   </StackLayout>
 </Page>
