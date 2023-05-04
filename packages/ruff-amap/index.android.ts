@@ -58,7 +58,7 @@ export class RuffAmapView extends RuffAmapViewBase {
   initMapView() {
     const centerBJPoint = new com.amap.api.maps.model.LatLng(39.904989, 117.405285);
     const mapOptions = new com.amap.api.maps.AMapOptions();
-    mapOptions.camera(new com.amap.api.maps.model.CameraPosition(centerBJPoint, 6, 0, 0));
+    mapOptions.camera(new com.amap.api.maps.model.CameraPosition(centerBJPoint, 5, -10, 30));
     // mapOptions.zoom(18).bearing(0).tilt(30).build();
     this.nativeMapView = new com.amap.api.maps.MapView(this._context, mapOptions);
 

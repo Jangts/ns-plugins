@@ -83,6 +83,23 @@ export class RuffAmapView extends RuffAmapViewBase {
     this.nativeMapView.backgroundColor = new Color('#ffffcc').ios;
     // @ts-ignore
     this.nativeMapView.centerCoordinate = CLLocationCoordinate2DMake(39.904989, 117.405285);
+    // @ts-ignore
+    this.nativeMapView.zoomLevel = 5;
+    // @ts-ignore
+    this.nativeMapView.rotationDegree = -10;
+    // @ts-ignore
+    this.nativeMapView.cameraDegree = 30;
+
+    // @ts-ignore
+    // this.nativeMapView.setCenterCoordinateAnimated(CLLocationCoordinate2DMake(39.904989, 117.405285), false);
+    // @ts-ignore
+    // this.nativeMapView.setZoomLevelAnimated(5, false);
+    // @ts-ignore
+    // this.nativeMapView.setRotationDegreeAnimatedDuration(-10, false, 0);
+    // @ts-ignore
+    // this.nativeMapView.setCameraDegreeAnimatedDuration(30, false, 0);
+    // this.nativeMapView.addAnimationWithZoomAnimationRotateAnimationCameraDegreeAnimation();
+
     this.nativeView.addSubview(this.nativeMapView);
 
     // @ts-ignore
