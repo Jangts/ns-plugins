@@ -81,6 +81,8 @@ export class RuffAmapView extends RuffAmapViewBase {
     this.nativeMapView = MAMapView.alloc().initWithFrame(CGRectMake(0, 0, this.nativeView.frame.size.width, this.nativeView.frame.size.height));
     this.nativeMapView.delegate = this;
     this.nativeMapView.backgroundColor = new Color('#ffffcc').ios;
+    // @ts-ignore
+    this.nativeMapView.centerCoordinate = CLLocationCoordinate2DMake(39.904989, 117.405285);
     this.nativeView.addSubview(this.nativeMapView);
 
     // @ts-ignore
