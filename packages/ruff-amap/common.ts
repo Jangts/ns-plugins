@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ContentView, Property } from '@nativescript/core';
 
-abstract class RuffAmapViewCommonBase extends ContentView {}
-
-// export const mapReadyProperty = new Property<RuffAmapViewCommonBase, string>({ name: 'mapReady' });
-// mapReadyProperty.register(RuffAmapViewCommonBase);
+abstract class RuffAmapViewCommonBase extends ContentView {
+  public static mapReadyEvent = 'mapReady';
+}
 
 export const mapApiKeyProperty = new Property<RuffAmapViewCommonBase, string>({ name: 'mapApiKey' });
 mapApiKeyProperty.register(RuffAmapViewCommonBase);
@@ -17,8 +16,6 @@ export const mapWidthProperty = new Property<RuffAmapViewCommonBase, number>({
 mapWidthProperty.register(RuffAmapViewCommonBase);
 
 export abstract class RuffAmapViewBase extends RuffAmapViewCommonBase {
-  public static mapReadyEvent = 'mapReady';
-
   protected config: any = {};
 
   [mapApiKeyProperty.setNative](value: string) {

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Color, ContentView } from '@nativescript/core';
-import { RuffAmapCommon } from './common';
+import { RuffAmapCommon, RuffAmapViewBase } from './common';
 
-export class RuffAmapView extends ContentView {
+export class RuffAmapView extends RuffAmapViewBase {
   public nativeView: android.widget.FrameLayout;
   private nativeMapView: com.amap.api.maps.MapView;
   private nativeMap: com.amap.api.maps.AMap;
@@ -29,6 +29,8 @@ export class RuffAmapView extends ContentView {
 
   public onLoaded() {
     super.onLoaded();
+    console.log('this.config', this.config);
+
     // @ts-ignore
     com.amap.api.maps.MapsInitializer.updatePrivacyShow(this._context, true, true);
     // @ts-ignore
@@ -40,7 +42,14 @@ export class RuffAmapView extends ContentView {
     map.setMapType(com.amap.api.maps.AMap.MAP_TYPE_SATELLITE);
 
     // @ts-ignore
-    console.log('map', map, map.addMarker, map.addPolyline, this.nativeMapView.setLogoPosition, map.addTileOverlay, map.moveCamera, map.setMapStatusLimits);
+    // console.log('map', map, map.addMarker, map.addPolyline, this.nativeMapView.setLogoPosition, map.addTileOverlay, map.moveCamera, map.setMapStatusLimits);
+    console.log('hasListeners mapReady', this.hasListeners(RuffAmapViewBase.mapReadyEvent));
+
+    this.notify({
+      eventName: RuffAmapViewBase.mapReadyEvent,
+      object: this,
+      map: map,
+    });
   }
 
   // 4. (optional) cleanup anything

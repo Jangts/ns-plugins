@@ -95,17 +95,13 @@ export class RuffAmapView extends RuffAmapViewBase {
     this.nativeMapView.mapType = MAMapTypeSatellite;
     // this.nativeMapView.setMapType(MAMapTypeSatellite); // 无效
 
-    console.log('222222222', this.hasListeners('mapReady'));
+    console.log('hasListeners mapReady', this.hasListeners(RuffAmapViewBase.mapReadyEvent));
 
     this.notify({
-      eventName: 'mapReady',
+      eventName: RuffAmapViewBase.mapReadyEvent,
       object: this,
-      // eventData: {
-      //   map: this,
-      // },
+      map: this,
     });
-
-    console.log('333333333');
   }
 
   public onLayout(left: number, top: number, right: number, bottom: number): void {

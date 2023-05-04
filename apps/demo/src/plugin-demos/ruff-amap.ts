@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Observable, EventData, Page } from '@nativescript/core';
@@ -10,7 +11,7 @@ export function navigatingTo(args: EventData) {
 }
 
 export class DemoModel extends Observable {
-  onMapReady() {
-    console.log('mapReady');
+  onMapReady(e: any) {
+    console.log('mapReady', Object.keys(e), e.map);
   }
 }
